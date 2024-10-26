@@ -1,3 +1,4 @@
+import asyncio
 import os
 import json
 
@@ -48,14 +49,21 @@ def execute_code(code):
     try:
         # Create a dictionary to hold local variables
         local_vars = {}
-        # Allow requests and any other libraries you want to use
-        exec(code, {"__builtins__": __builtins__, "requests": requests, "bot": bot, "math": math, "random": random}, local_vars)
-        # Try to get a result from the local variables
-        if 'result' in local_vars:
-            return str(local_vars['result'])
-        return str(local_vars) if local_vars else "No output"
+        # Define the environment for execution, including safe access to the requests library
+        exec_env = {
+            "__builtins__": __builtins__,
+            "requests": requests,
+            "math": math,
+            "random": random,
+        }
+
+        exec(code, exec_env, local_vars)
+
+        return str(local_vars['result'])
+
     except Exception as e:
-        return f"Error executing code: {str(e)}"
+        print(f"Error executing code: {str(e)}")
+        return f"Error executing code: {str(e)} with code: {code}"
 
 @bot.event
 async def on_ready():
@@ -64,6 +72,23 @@ async def on_ready():
 
     load_reply_modules('./modules')
     print("Loaded reply modules:", reply_modules)
+
+
+def execute_code_in_string(text):
+    while True:
+        start = text.find("${")
+        if start == -1:
+            break
+        end = text.find("}$", start)
+        if end == -1:
+            break
+
+        code_to_execute = text[start + 2:end].strip()
+        result = execute_code(code_to_execute)
+
+        text = text[:start] + str(result) + text[end + 2:]
+
+    return text
 
 @bot.event
 async def on_message(message: discord.Message):
@@ -77,19 +102,13 @@ async def on_message(message: discord.Message):
         reply_message = reply_data['message']
         embed_data = reply_data['embed']
 
-        # Check for ${arbitrary python code} in the reply message
-        while "${" in reply_message and "}" in reply_message:
-            start = reply_message.find("${") + 2
-            end = reply_message.find("}", start)
-            if end == -1:
-                break  # No closing brace found
-            code_to_execute = reply_message[start:end].strip()
-            result = execute_code(code_to_execute)
-            reply_message = reply_message.replace(f"${{{code_to_execute}}}", str(result))
+        reply_message = execute_code_in_string(reply_message)
 
-        # Create an embed if embed data exists
         embed = None
         if embed_data:
+            # Execute code in the embed description if it exists
+            if 'description' in embed_data:
+                embed_data['description'] = execute_code_in_string(embed_data['description'])
             embed = discord.Embed.from_dict(embed_data)
 
         await message.reply(content=reply_message, embed=embed)

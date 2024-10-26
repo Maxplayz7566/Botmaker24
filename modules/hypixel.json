@@ -1,0 +1,11 @@
+{
+    "command": "hypixel",
+    "replyContent": {
+        "embed": {
+            "title": "Hypixel status",
+            "description": "Online players: ${import requests; result = requests.get(\"https://api.mcstatus.io/v2/status/java/hypixel.net\").json()['players']['online']\n}$",
+            "color": 0
+        }
+    },
+    "type": "reply"
+}

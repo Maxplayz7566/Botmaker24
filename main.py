@@ -80,7 +80,7 @@ if __name__ == '__main__':
     serverPort = 59267 if DEBUG else getRandomPort()
 
     flaskThread = threading.Thread(name='Flask', daemon=True, target=run_flask)
-    botThread = threading.Thread(name='Flask', daemon=True, target=run_bot)
+    botThread = threading.Thread(name='Bot', daemon=True, target=run_bot)
 
     logger.info("Creating window")
     window = webview.create_window(f'',
