@@ -14,9 +14,7 @@ def createRoutes(app: Flask, window: Window):
 
     @app.route('/<path:filename>', methods=['GET'])
     def serve_file(filename):
-        # Ensure the file exists
         if os.path.isfile(os.path.join(BASE_DIR, filename)):
-            # Serve the file
             return send_from_directory(BASE_DIR, filename)
         else:
             abort(404)
@@ -68,9 +66,13 @@ def createRoutes(app: Flask, window: Window):
 
             return data, 200
         else:
-            window.resize(int(width), int(height), FixPoint.NORTH)
+            window.resize(int(width), int(height), FixPoint.SOUTH)
             data = {
                 'width': window.width,
                 'height': window.height
             }
             return data, 200
+
+    @app.route('/api/completedsetup')
+    def setupsate():
+        return [json.load(open('data.json', 'r'))['completedSetup']]
