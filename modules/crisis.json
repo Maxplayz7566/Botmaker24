@@ -1,0 +1,11 @@
+{
+    "command": "crisis",
+    "replyContent": {
+        "embed": {
+            "title": "You're not alone",
+            "description": "Resources:\n\n(US/CA): 9-8-8",
+            "color": 3342591
+        }
+    },
+    "type": "reply"
+}

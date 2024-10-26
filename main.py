@@ -1,5 +1,6 @@
 import json
 import os.path
+import time
 
 import webview
 import ctypes
@@ -61,13 +62,12 @@ def getRandomPort():
 def codeOnRun():
     logger.info("Started Webview")
     loadData()
-    hwnd = ctypes.windll.user32.FindWindowW(None, f'Botmaker24 - {appInfo['version']}')
-    flaskThread.start()
     botThread.start()
-
+    flaskThread.start()
 
 def run_flask():
-    flaskapi.createRoutes(app, window, bot)
+    time.sleep(2)
+    flaskapi.createRoutes(app, window, bot, logger)
     app.run('127.0.0.1', serverPort)
 
 def run_bot():

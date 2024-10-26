@@ -1,7 +1,8 @@
 import json
+import logging
 import os
 
-from flask import Flask, send_file, render_template, abort, send_from_directory, request, jsonify, redirect
+from flask import Flask, send_file, abort, send_from_directory, request
 from webview import Window
 from webview.window import FixPoint
 import bot as lahfiwuhfapskf
@@ -9,7 +10,7 @@ import requests
 
 BASE_DIR = "ui"
 
-def createRoutes(app: Flask, window: Window, bot: lahfiwuhfapskf):
+def createRoutes(app: Flask, window: Window, bot: lahfiwuhfapskf, logger: logging.Logger):
     @app.errorhandler(404)
     def page_not_found(e):
         return send_file('ui/templates/404.html'), 404
@@ -74,7 +75,7 @@ def createRoutes(app: Flask, window: Window, bot: lahfiwuhfapskf):
 
             return data, 200
         else:
-            window.resize(int(width), int(height), FixPoint.SOUTH)
+            window.resize(int(width), int(height), FixPoint.NORTH)
             data = {
                 'width': window.width,
                 'height': window.height
@@ -87,6 +88,8 @@ def createRoutes(app: Flask, window: Window, bot: lahfiwuhfapskf):
 
     @app.route('/api/modules')
     def listmodules():
+        mods = {}
+
         return bot.reply_modules
 
     @app.route('/bot/avatar')
@@ -100,3 +103,62 @@ def createRoutes(app: Flask, window: Window, bot: lahfiwuhfapskf):
     @app.route('/bot/name')
     def name():
         return bot.bot.user.name
+
+    @app.route('/api/newmodule', methods=['POST'])
+    def newModule():
+        modCode = json.loads(request.data.decode())
+
+        logger.info("Patching embed color")
+        try:
+            if modCode.get('type') == 'reply':
+                hex_code = modCode['replyContent']['embed']['color'].lstrip("#")
+                modCode['replyContent']['embed']['color'] = int(hex_code, 16)
+                logger.info('Converted hex to decimal, new: ' + str(int(hex_code, 16)))
+        except Exception as e:
+            logger.error("Couldn't patch embed color, whatever...")
+
+        logger.info("Creating module file")
+        json.dump(modCode, open(f'modules/{modCode['command']}.json', 'w'), indent=4)
+
+        bot.load_reply_modules('./modules')
+        logger.info("Reloaded reply modules:", bot.reply_modules)
+
+        return {'message': f'Created module {modCode['command']}'}
+
+    @app.route('/api/updatemodule', methods=['PUT'])
+    def editModule():
+        modCode = json.loads(request.data.decode())
+
+        logger.info("Patching embed color")
+        try:
+            if modCode.get('type') == 'reply':
+                hex_code = modCode['replyContent']['embed']['color'].lstrip("#")
+                modCode['replyContent']['embed']['color'] = int(hex_code, 16)
+                logger.info('Converted hex to decimal, new: ' + str(int(hex_code, 16)))
+        except Exception as e:
+            logger.error("Couldn't patch embed color, whatever...")
+
+        logger.info("Creating module file")
+        json.dump(modCode, open(f'modules/{modCode['command']}.json', 'w'), indent=4)
+
+        bot.load_reply_modules('./modules')
+        logger.info("Reloaded reply modules:", bot.reply_modules)
+
+        return {'message': f'Created module {modCode['command']}'}
+
+    @app.route('/api/getmod')
+    def getmod():
+        module = 'modules/'+request.args.get('m')+'.json'
+
+        return json.load(open(module, 'r')), 200
+
+    @app.route('/api/delmod', methods=['DELETE'])
+    def delmod():
+        module = 'modules/' + request.args.get('m') + '.json'
+
+        os.remove(module)
+
+        bot.load_reply_modules('./modules')
+        logger.info("Reloaded reply modules:", bot.reply_modules)
+
+        return {'deleted': 'modules/' + request.args.get('m') + '.json'}, 200

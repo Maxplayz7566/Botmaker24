@@ -10,7 +10,7 @@ body {
     padding: 5px;
     display: flex;
     gap: 15px;
-    height: 69px;
+    height: calc(69px + 5px);
     justify-content: right;
     align-items: center;
 }
@@ -106,7 +106,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: fadeOut 1s ease-out forwards 5s;
+    animation: fadeOut 1s ease-out forwards 3s;
 }
 
 .fader h1 {
@@ -132,6 +132,8 @@ body {
 .modules {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .module {
@@ -165,4 +167,19 @@ body {
 
 .createModule:hover {
     background: var(--primary-hover);
+}
+
+.delModule {
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bolder;
+    cursor: pointer;
+    margin-left: 440px;
+    position: absolute;
+}
+
+.mod {
+    display: flex;
+    align-items: center;
 }

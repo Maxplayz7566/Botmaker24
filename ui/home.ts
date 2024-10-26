@@ -11,7 +11,7 @@ fetch('/api/modules').then(function (response) {
     let html = ''
 
     Object.keys(json).forEach(key => {
-        html += `<a class="module">${key} - ${json[key]['type']}</a>`
+        html += `<div class="mod"><a onclick="window.location.href = '/modules/edit.html#${key}'" class="module">${key} - ${json[key]['type']}</a> <a onclick="if (window.confirm('Do you really want to delete: `+ key.replace('!', '') +`?')) { del('${key.replace('!', '')}'); }" class="delModule">DELETE</a></div>`
     });
 
     modulesList.innerHTML = html;
@@ -33,9 +33,28 @@ function dot() {
     dotCount = (dotCount + 1) % 4;
 }
 
+function del(key) {
+    fetch('/api/delmod?m='+key, {
+        method: 'DELETE',
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            window.location.href = '/redirect.html#/home.html&1000';
+        })
+}
+
 setInterval(dot, 500);
 dot()
 
 setTimeout(() => {
     document.querySelector('.fader').remove();
-}, 6000);
+}, 4000);
+
+document.querySelector('.createModule').addEventListener('click', (e) => {
+    window.location.href = '/modules/new.html';
+})

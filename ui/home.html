@@ -58,6 +58,11 @@
     });
   }
 
+  if (window.location.hash !== "#loaded") {
+    window.location.hash = 'loaded';
+    window.location.reload();
+  }
+
   showPage('home')
 
   window.onload = function() {

@@ -17,6 +17,8 @@ bot = commands.Bot(command_prefix=" ", intents=intents)
 reply_modules = {}
 
 def load_reply_modules(directory):
+    global reply_modules
+    reply_modules = {}
     for filename in os.listdir(directory):
         if filename.endswith('.json'):
             filepath = os.path.join(directory, filename)

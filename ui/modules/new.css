@@ -1,0 +1,91 @@
+body {
+    color: #ffffff;
+    background-color: #000000;
+    overflow: hidden;
+}
+
+.backButtonEditor {
+    width: 64px;
+    height: 64px;
+    background-color: var(--primary);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.saveButtonEditor:hover {
+    background: var(--primary-hover);
+}
+
+.saveButtonEditor {
+    width: 64px;
+    height: 64px;
+    background-color: var(--primary);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.backButtonEditor:hover {
+    background: var(--primary-hover);
+}
+
+
+.moduleNameEditor {
+    position: absolute;
+    font-size: 2em;
+    top: 7.5px;
+    width: 65%;
+    height: 64px;
+    left: calc(20px + 64px);
+}
+
+#content {
+    position: absolute;
+    top: calc(50px + 64px);
+    background-color: var(--dialouge);
+    display: flex;
+    justify-content: left;
+    width: 80vw;
+    height: calc(80vh - 64px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 1.5em;
+    padding: 15px;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+select {
+    background-color: var(--primary);
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-left: 10px;
+    font-size: 1em;
+    height: fit-content;
+    width: fit-content;
+}
+
+select:hover {
+    background-color: var(--primary-hover);
+    cursor: pointer;
+}
+
+textarea {
+    font-size: 0.8em;
+}

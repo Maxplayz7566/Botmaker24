@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+    <link rel="stylesheet" href="new.css">
+    <link rel="stylesheet" href="/fonts.css">
+</head>
+<body>
+<a onclick="window.location.href = '/home.html'" class="backButtonEditor"><</a>
+<a onclick="save()" class="saveButtonEditor">
+    <img src="/assets/saev.svg" style="scale: 1.6">
+</a>
+<label>
+    <input type="text" class="moduleNameEditor" placeholder="Module name/command no prefix" required>
+</label>
+
+<main id="content">
+    <label for="itemSelect">Type:
+        <select id="typeSelect">
+            <option value="reply" selected>Reply</option>
+        </select>
+    </label>
+
+    <section id="replyModuleSettings">
+        <h1>Reply settings</h1>
+        <label for="Text1_83jh8f1">Reply message:</label>
+        <p style="font-size: 0.5em">To use code please use ${result = a method that returns} to execute python code</p>
+        <textarea id="Text1_83jh8f1" name="Text1" cols="45" rows="10"></textarea>
+
+        <p>Embed:
+            <label class="switch">
+                <input type="checkbox" id="toggleEmbed" onclick="toggleEmbedSection()">
+                <span class="slider"></span>
+            </label>
+        </p>
+
+        <section class="section_9214ncea92" id="embedSection" style="display: none;">
+            <label for="embedTitle">Embed Title:</label>
+            <input type="text" id="embedTitle" name="embedTitle" required>
+
+            <p></p>
+
+            <label for="embedDescription">Embed Description:</label>
+            <p style="font-size: 0.5em">To use code please use ${result = a method that returns} to execute python code</p>
+            <textarea id="embedDescription" name="embedDescription" cols="45" rows="10" required></textarea>
+
+            <p></p>
+
+            <label for="embedColor">Embed Color:</label>
+            <input type="color" id="embedColor" name="embedColor" placeholder="#ffffff" required>
+        </section>
+
+        <script>
+            function toggleEmbedSection() {
+                const embedSection = document.getElementById('embedSection');
+                const toggle = document.getElementById('toggleEmbed');
+                embedSection.style.display = toggle.checked ? 'block' : 'none';
+            }
+        </script>
+
+    </section>
+</main>
+
+<script>
+    const typeSelect = document.getElementById('typeSelect');
+    const replyModuleSettings = document.getElementById('replyModuleSettings');
+
+    function updateSettings() {
+        if (typeSelect.value === 'reply') {
+            replyModuleSettings.style.display = `block`;
+        } else {
+            replyModuleSettings.style.display = 'none';
+        }
+    }
+
+    updateSettings();
+
+    typeSelect.addEventListener('change', updateSettings);
+
+    fetch('/api/screenSize?width=900&height=800', { method: 'POST' });
+    fetch('/api/title?title=BotMaker24 - New module', { method: 'POST' });
+</script>
+
+<script src="new.js"></script>
+</body>
+</html>
