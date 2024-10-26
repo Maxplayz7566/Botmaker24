@@ -35,7 +35,8 @@ def load_reply_modules(directory):
                         # Store the reply content and embed data
                         reply_modules[command_key] = {
                             'message': reply_content,
-                            'embed': embed_data
+                            'embed': embed_data,
+                            'type': 'reply'
                         }
                 except json.JSONDecodeError as e:
                     print(f"Error decoding JSON in file {filename}: {e}")

@@ -4,30 +4,13 @@
   <meta charset="UTF-8">
   <title>BotMaker24</title>
   <link rel="stylesheet" href="home.css">
-  <style>
-    /* General styling for page transition */
-    .page {
-      position: absolute;
-      top: 100px; /* Adjusted to fit below the navigation */
-      left: 0;
-      right: 0;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      z-index: 0;
-      visibility: hidden; /* Keeps the elements in flow without display: none */
-    }
-    .page.active {
-      opacity: 1;
-      visibility: visible;
-      z-index: 1;
-    }
-  </style>
+  <link rel="stylesheet" href="fonts.css">
 </head>
 <body>
 <nav id="topbar">
   <div class="botDetails">
     <img id="botAvatar" src="/bot/avatar" alt="Bot Avatar">
-    <h3 id="botName">BOT</h3>
+    <h3 id="botName"></h3>
   </div>
   <button class="tab" onclick="showPage('home'); fetch('/api/title?title=BotMaker24 - Home', { method: 'POST' });">
     <img src="assets/home.svg" alt="Home Icon">
@@ -46,14 +29,21 @@
 <main id="content">
   <section id="home" class="page">
     <h1>Welcome to BotMaker24.</h1>
+    <p id="moduleCount_92cef12">There are currently 0 modules installed.</p>
   </section>
   <section id="modules" class="page">
-    <h1>Modules</h1>
+    <h1>Modules.</h1>
+    <a class="createModule">+</a>
+    <div class="modules" id="moduleslist"></div>
   </section>
   <section id="settings" class="page">
-    <h1>Settings</h1>
+    <h1>Settings.</h1>
   </section>
 </main>
+
+<div class="fader">
+  <h1 id="loadingText">Loading</h1>
+</div>
 
 <script>
   function showPage(pageId) {
@@ -73,7 +63,18 @@
   window.onload = function() {
     fetch('/api/screenSize?width=800&height=600', { method: 'POST' });
     fetch('/api/title?title=BotMaker24 - Home', { method: 'POST' });
+
+    fetch('/bot/name', { method: 'GET' }).then(response => {
+      if (response.ok) {
+        return response.text();
+      } else {
+        throw new Error(response.statusText);
+      }
+    }).then(data => {
+      document.getElementById('botName').innerText = data;
+    });
   };
 </script>
+<script src="home.ts"></script>
 </body>
 </html>

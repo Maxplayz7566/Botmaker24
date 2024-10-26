@@ -1,0 +1,21 @@
+@font-face {
+    font-family: SpotifyMixUI;
+    font-weight: 700;
+    font-display: swap;
+    src: url(https://encore.scdn.co/fonts/SpotifyMixUI-Bold-4264b799009b1db5c491778b1bc8e5b7.woff2) format("woff2"),url(https://encore.scdn.co/fonts/SpotifyMixUI-Bold-05392dabcaa9fab302f9ddc047b15752.woff) format("woff")
+}
+
+@font-face {
+    font-family: SpotifyMixUI;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://encore.scdn.co/fonts/SpotifyMixUI-Regular-cc3b1de388efa4cbca6c75cebc24585e.woff2) format("woff2"),url(https://encore.scdn.co/fonts/SpotifyMixUI-Regular-b342a41ec78025c361c018e5d355ab21.woff) format("woff")
+}
+
+:root {
+    --primary: #1ed760;
+    --primary-hover: #31ef75;
+    --dialouge: #4949498E;
+}
+
+* {font-family: SpotifyMixUI, sans-serif; transition: background 0.3s ease;}

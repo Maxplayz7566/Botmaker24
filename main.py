@@ -67,7 +67,7 @@ def codeOnRun():
 
 
 def run_flask():
-    flaskapi.createRoutes(app, window, bot.bot)
+    flaskapi.createRoutes(app, window, bot)
     app.run('127.0.0.1', serverPort)
 
 def run_bot():

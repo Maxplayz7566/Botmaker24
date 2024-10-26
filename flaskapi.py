@@ -1,19 +1,26 @@
 import json
 import os
-from io import BytesIO
 
 from flask import Flask, send_file, render_template, abort, send_from_directory, request, jsonify, redirect
 from webview import Window
 from webview.window import FixPoint
-from discord.ext import commands
+import bot as lahfiwuhfapskf
 import requests
 
 BASE_DIR = "ui"
 
-def createRoutes(app: Flask, window: Window, bot: commands.Bot):
+def createRoutes(app: Flask, window: Window, bot: lahfiwuhfapskf):
     @app.errorhandler(404)
     def page_not_found(e):
-        return render_template('404.html'), 404
+        return send_file('ui/templates/404.html'), 404
+
+    @app.errorhandler(400)
+    def bad_request(e):
+        return send_file('ui/templates/400.html'), 400
+
+    @app.errorhandler(405)
+    def not_allowed(e):
+        return send_file('ui/templates/405.html'), 405
 
     @app.route('/<path:filename>', methods=['GET'])
     def serve_file(filename):
@@ -39,15 +46,13 @@ def createRoutes(app: Flask, window: Window, bot: commands.Bot):
     @app.route('/api/setbottoken', methods=['POST'])
     def setToken():
         token = request.form.get('token')
-        guild = request.form.get('guild')
 
-        if token and guild:
+        if token:
             try:
                 data = json.load(open('data.json', 'r'))
 
                 data['completedSetup'] = True
                 data['botInfo']['token'] = token
-                data['botInfo']['guild'] = int(guild)
 
                 json.dump(data, open('data.json', 'w'), indent=4)
                 return "<script>window.location.href = '/home.html'</script>", 200
@@ -80,14 +85,18 @@ def createRoutes(app: Flask, window: Window, bot: commands.Bot):
     def setupsate():
         return [json.load(open('data.json', 'r'))['completedSetup']]
 
+    @app.route('/api/modules')
+    def listmodules():
+        return bot.reply_modules
+
     @app.route('/bot/avatar')
     def avatar():
-        if bot.user.avatar is not None:
-            open('cache.png', 'wb').write(requests.get(bot.user.avatar).content)
+        if bot.bot.user.avatar is not None:
+            open('cache.png', 'wb').write(requests.get(bot.bot.user.avatar).content)
         else:
             open('cache.png', 'wb').write(requests.get('https://discord.com/assets/a0180771ce23344c2a95.png').content)
         return send_file('cache.png')
 
     @app.route('/bot/name')
     def name():
-        return bot.user.name
+        return bot.bot.user.name

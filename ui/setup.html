@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Setup</title>
     <link rel="stylesheet" href="setup.css">
+    <link rel="stylesheet" href="fonts.css">
 </head>
 <body>
     <script>
@@ -20,9 +21,6 @@
         <form method="post" action="/api/setbottoken">
             <label for="botToken" id="tokenInputText">Enter Discord bot token here:</label>
             <input type="text" id="botToken" name="token" placeholder="I trust you to enter a valid one" required>
-
-            <label for="botToken" id="guildInputText">Enter enter guild id here:</label>
-            <input type="number" id="guild" name="guild" placeholder="I trust you to enter a valid one" required>
 
             <button type="submit" id="submitButton">Next</button>
         </form>
