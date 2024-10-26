@@ -48,7 +48,7 @@ body {
 
 #botToken, #guild {
     height: 30px;
-    width: 256px;
+    width: 200px;
     align-self: center;
 }
 

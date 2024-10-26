@@ -71,6 +71,11 @@ def run_flask():
     app.run('127.0.0.1', serverPort)
 
 def run_bot():
+    while True:
+        if json.load(open('data.json', 'r'))['completedSetup']:
+            break
+        time.sleep(0.1)
+
     bot.bot.run(json.load(open('data.json', 'r'))['botInfo']['token'])
 
 if __name__ == '__main__':

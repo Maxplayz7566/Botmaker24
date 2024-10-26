@@ -1,0 +1,11 @@
+{
+    "command": "help",
+    "type": "reply",
+    "replyContent": {
+        "embed": {
+            "title": "Help",
+            "description": "Commands:\n - !help, show this.\n - !ping, replies with pong.\n - !crisis, resources.\n - !hypixel, get its status.",
+            "color": 40447
+        }
+    }
+}
