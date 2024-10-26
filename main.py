@@ -15,7 +15,7 @@ import bot
 
 window: Window = None
 app = Flask(__name__, template_folder='ui/templates')
-DEBUG = True
+DEBUG = False
 
 WM_SETICON = 0x0080
 ICON_SMALL = 0
