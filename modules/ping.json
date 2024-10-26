@@ -1,0 +1,7 @@
+{
+    "type": "reply",
+    "command": "ping",
+    "replyContent": {
+        "message": "Pong"
+    }
+}

@@ -4,11 +4,13 @@ import os.path
 import webview
 import ctypes
 import logging
-import flaskapi
 import threading
 
 from flask import Flask
 from webview import Window
+
+import flaskapi
+import bot
 
 window: Window = None
 app = Flask(__name__, template_folder='ui/templates')
@@ -27,9 +29,9 @@ appInfo = {
 
 defaultData = {
     "completedSetup": False,
+    "prefix": "!",
     "botInfo": {
-        "token": "",
-        "guild": 0
+        "token": ""
     }
 }
 
@@ -61,10 +63,15 @@ def codeOnRun():
     loadData()
     hwnd = ctypes.windll.user32.FindWindowW(None, f'Botmaker24 - {appInfo['version']}')
     flaskThread.start()
+    botThread.start()
+
 
 def run_flask():
     flaskapi.createRoutes(app, window)
     app.run('127.0.0.1', serverPort)
+
+def run_bot():
+    bot.bot.run(json.load(open('data.json', 'r'))['botInfo']['token'])
 
 if __name__ == '__main__':
     logger = getLogger()
@@ -73,6 +80,7 @@ if __name__ == '__main__':
     serverPort = 59267 if DEBUG else getRandomPort()
 
     flaskThread = threading.Thread(name='Flask', daemon=True, target=run_flask)
+    botThread = threading.Thread(name='Flask', daemon=True, target=run_bot)
 
     logger.info("Creating window")
     window = webview.create_window(f'',
