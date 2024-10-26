@@ -1,13 +1,16 @@
 import json
 import os
+from io import BytesIO
 
 from flask import Flask, send_file, render_template, abort, send_from_directory, request, jsonify, redirect
-from webview import Window, token
+from webview import Window
 from webview.window import FixPoint
+from discord.ext import commands
+import requests
 
 BASE_DIR = "ui"
 
-def createRoutes(app: Flask, window: Window):
+def createRoutes(app: Flask, window: Window, bot: commands.Bot):
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('404.html'), 404
@@ -76,3 +79,11 @@ def createRoutes(app: Flask, window: Window):
     @app.route('/api/completedsetup')
     def setupsate():
         return [json.load(open('data.json', 'r'))['completedSetup']]
+
+    @app.route('/bot/avatar')
+    def avatar():
+        if bot.user.avatar is not None:
+            open('cache.png', 'wb').write(requests.get(bot.user.avatar).content)
+        else:
+            open('cache.png', 'wb').write(requests.get('https://discord.com/assets/a0180771ce23344c2a95.png').content)
+        return send_file('cache.png')

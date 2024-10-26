@@ -1,10 +1,14 @@
 import os
 import json
+
 import discord
 from discord.ext import commands
 
 # Imports for code execution
 import requests
+from random import random
+import math
+# End imports for code execution
 
 intents = discord.Intents.all()
 
@@ -42,7 +46,7 @@ def execute_code(code):
         # Create a dictionary to hold local variables
         local_vars = {}
         # Allow requests and any other libraries you want to use
-        exec(code, {"__builtins__": __builtins__, "requests": requests}, local_vars)
+        exec(code, {"__builtins__": __builtins__, "requests": requests, "bot": bot, "math": math, "random": random}, local_vars)
         # Try to get a result from the local variables
         if 'result' in local_vars:
             return str(local_vars['result'])
