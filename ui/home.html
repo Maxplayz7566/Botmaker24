@@ -2,14 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Home</title>
+  <title>BotMaker24</title>
   <link rel="stylesheet" href="home.css">
+  <style>
+    /* General styling for page transition */
+    .page {
+      position: absolute;
+      top: 100px; /* Adjusted to fit below the navigation */
+      left: 0;
+      right: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 0;
+      visibility: hidden; /* Keeps the elements in flow without display: none */
+    }
+    .page.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-  <nav><img src="/bot/avatar"></nav>
-</body>
+<nav id="topbar">
+  <div class="botDetails">
+    <img id="botAvatar" src="/bot/avatar" alt="Bot Avatar">
+    <h3 id="botName">BOT</h3>
+  </div>
+  <button class="tab" onclick="showPage('home'); fetch('/api/title?title=BotMaker24 - Home', { method: 'POST' });">
+    <img src="assets/home.svg" alt="Home Icon">
+    <span>Home</span>
+  </button>
+  <button class="tab" onclick="showPage('modules'); fetch('/api/title?title=BotMaker24 - Modules', { method: 'POST' });">
+    <img src="assets/module.svg" alt="Modules Icon">
+    <span>Modules</span>
+  </button>
+  <button class="tab" onclick="showPage('settings'); fetch('/api/title?title=BotMaker24 - Settings', { method: 'POST' });">
+    <img src="assets/settings.svg" alt="Settings Icon">
+    <span>Settings</span>
+  </button>
+</nav>
+
+<main id="content">
+  <section id="home" class="page">
+    <h1>Welcome to BotMaker24.</h1>
+  </section>
+  <section id="modules" class="page">
+    <h1>Modules</h1>
+  </section>
+  <section id="settings" class="page">
+    <h1>Settings</h1>
+  </section>
+</main>
+
 <script>
-  fetch('/api/screenSize?width=800&height=600', {method: 'POST'})
-  fetch('/api/title?title=BotMaker24 - Home', {method: 'POST'})
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+
+    pages.forEach(page => {
+      if (page.id === pageId) {
+        page.classList.add('active');
+      } else {
+        page.classList.remove('active');
+      }
+    });
+  }
+
+  showPage('home')
+
+  window.onload = function() {
+    fetch('/api/screenSize?width=800&height=600', { method: 'POST' });
+    fetch('/api/title?title=BotMaker24 - Home', { method: 'POST' });
+  };
 </script>
+</body>
 </html>

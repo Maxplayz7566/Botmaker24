@@ -87,3 +87,7 @@ def createRoutes(app: Flask, window: Window, bot: commands.Bot):
         else:
             open('cache.png', 'wb').write(requests.get('https://discord.com/assets/a0180771ce23344c2a95.png').content)
         return send_file('cache.png')
+
+    @app.route('/bot/name')
+    def name():
+        return bot.user.name

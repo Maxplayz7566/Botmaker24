@@ -1,3 +1,90 @@
+@font-face {
+    font-family: DefinitelyNotSpotifyMix;
+    font-weight: 800;
+    src: url(https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2) format("woff2 supports variations"),
+    url(https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2) format("woff2-variations"),
+    url(https://encore.scdn.co/fonts/SpotifyMixUITitle-Extrabold-ba6c73cd7f82c81e49cf2204017803ed.woff2) format("woff2"),
+    url(https://encore.scdn.co/fonts/SpotifyMixUITitle-Extrabold-dd06104c9de7463b60455a65171cab06.woff) format("woff");
+}
+
+:root {
+    --primary: #3c8bff;
+    --primary-hover: #4577bc;
+    --dialouge: #4949498E;
+}
+
+*:not(.material-symbols-outlined) {font-family: DefinitelyNotSpotifyMix, sans-serif; }
+
 body {
     background: black;
+    margin: 0;
+    color: white;
+    overflow: hidden;
+}
+
+#topbar {
+    background: #2b2d31;
+    padding: 5px;
+    display: flex;
+    gap: 15px;
+    height: 69px;
+    justify-content: right;
+    align-items: center;
+}
+
+#topbar .botDetails {
+    position: fixed;
+    left: 0;
+}
+
+.botDetails {
+    padding: 5px;
+    display: flex;
+    gap: 15px;
+    background: #2b2d31;
+}
+
+#botAvatar {
+    height: 64px;
+    border-radius: 100%;
+    background: #313338;
+}
+
+.tab {
+    position: relative;
+    background-size: cover;
+    height: 64px;
+    width: 64px;
+    border: none;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--primary);
+    transition: background 0.3s ease;
+    color: white;
+}
+
+.tab:hover {
+    background-color: var(--primary-hover);
+}
+
+.tab span {
+    font-family: DefinitelyNotSpotifyMix, sans-serif;
+    font-size: 10px;
+}
+
+.tab img {
+    position: absolute;
+    width: 60%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -65%);
+}
+
+#content {
+    padding: 10px;
 }
