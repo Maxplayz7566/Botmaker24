@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Setup</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="title">Setup</h1>
+    <div id="content">
+        <form method="post" action="/api/setbottoken">
+            <label for="botToken" id="tokenInputText">Enter Discord bot token here:</label>
+            <input type="text" id="botToken" name="token" placeholder="I trust you to enter a valid one" required>
+
+            <label for="botToken" id="guildInputText">Enter enter guild id here:</label>
+            <input type="number" id="guild" name="guild" placeholder="I trust you to enter a valid one" required>
+
+            <button type="submit" id="submitButton">Next</button>
+        </form>
+    </div>
+</body>
+<script>
+    console.log("Definitely Not Using Spotify Mix, https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2")
+
+    fetch('/api/screenSize?width=320&height=600', {method: 'POST'})
+    fetch('/api/title?title=Setup BotMaker24', {method: 'POST'})
+
+    setTimeout(() => {
+        document.getElementById('title').style.animation = 'slide 4s forwards'
+        setTimeout(() => {
+            document.getElementById('content').style.animation = 'fade-in 1s forwards'
+        }, 4000)
+    }, 500)
+</script>
+</html>

@@ -1,0 +1,101 @@
+@font-face {
+    font-family: DefinitelyNotSpotifyMix;
+    font-weight: 800;
+    src: url(https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2) format("woff2 supports variations"),
+    url(https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2) format("woff2-variations"),
+    url(https://encore.scdn.co/fonts/SpotifyMixUITitle-Extrabold-ba6c73cd7f82c81e49cf2204017803ed.woff2) format("woff2"),
+    url(https://encore.scdn.co/fonts/SpotifyMixUITitle-Extrabold-dd06104c9de7463b60455a65171cab06.woff) format("woff");
+}
+
+:root {
+    --primary: #3c8bff;
+    --primary-hover: #4577bc;
+    --dialouge: #4949498E;
+}
+
+* {
+    font-family: DefinitelyNotSpotifyMix, sans-serif;
+}
+
+body {
+    background: #000;
+    color: white;
+    overflow: hidden;
+}
+
+#title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    color: #000000;
+    text-align: center;
+}
+
+#content {
+    background: var(--dialouge);
+    padding: 25px;
+    border-radius: 5px;
+    position: absolute;
+    left: 150%;
+    top: 50%;
+    width: 80%;
+    transform: translate(-50%, -50%);
+}
+
+#content * {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#submitButton {
+    background: var(--primary);
+    border: none;
+    border-radius: 15px;
+    width: 64px;
+    height: 30px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: normal;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+#botToken, #guild {
+    height: 30px;
+    width: 256px;
+    align-self: center;
+}
+
+#submitButton:hover {
+    background: var(--primary-hover);
+}
+
+@keyframes slide {
+    0% {
+        color: #000000;
+        top: 40%;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        color: #ffffff;
+        top: 40%;
+        transform: translate(-50%, -50%) scale(2);
+    }
+    100% {
+        color: #ffffff;
+        top: 25px;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes fade-in {
+    to {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
