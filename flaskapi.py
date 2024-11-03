@@ -162,3 +162,17 @@ def createRoutes(app: Flask, window: Window, bot: lahfiwuhfapskf, logger: loggin
         logger.info("Reloaded reply modules:", bot.reply_modules)
 
         return {'deleted': 'modules/' + request.args.get('m') + '.json'}, 200
+
+    @app.route('/api/prefix')
+    def getPrefix():
+        return json.load(open('data.json', 'r'))['prefix']
+
+    @app.route('/api/setprefix', methods=['POST'])
+    def setPrefix():
+        data = json.load(open('data.json', 'r'))
+
+        data['prefix'] = request.args.get('pr') if data['prefix'].strip() != '' else '!'
+
+        json.dump(data, open('data.json', 'w'), indent=4)
+
+        return {'message': 'Done!'}, 200
